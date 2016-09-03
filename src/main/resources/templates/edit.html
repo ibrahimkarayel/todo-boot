@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Edit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+    <link href="../static/css/todo.css" th:href="@{/css/todo.css}" rel="stylesheet" media="screen"/>
+    <script src="../static/js/todo.js" th:src="@{/static/js/todo.js}"></script>
+
+    <!--datetime picker-->
+    <link href="../static/css/bootstrap-datetimepicker.css" th:href="@{/css/bootstrap-datetimepicker.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="../static/js/moment-with-locales.js" th:src="@{/static/js/moment-with-locales.js}"></script>
+    <script src="../static/js/bootstrap-datetimepicker.js" th:src="@{/static/js/bootstrap-datetimepicker.js}"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="btn-compose pull-left">
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">
+                    <h6 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h6>
+                </a>
+                </li>
+                <li>
+                    <a>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn" type="submit" value="Sign Out"/>
+                        </form>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="compose">
+        <div class="container">
+            <div class="content-container clearfix">
+
+                <div class="row">
+                    <h1 class="content-title">Edit Task</h1>
+
+                    <div th:if="${saveTodo eq 'success'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>Todo Saved Successfully</strong>
+
+                    </div>
+
+                    <div th:if="${saveTodo eq 'fail'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>Error!</strong> Unexpected Error occurred
+                    </div>
+
+
+                    <!--/*@thymesVar id="todoForm" type="java"*/-->
+                    <form th:object="${editTodo}" th:action="@{/user/editTodo}" method="post">
+                        <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+                        <input type="hidden" th:field="*{userId}" th:value="*{userId}"/>
+                        <input type="hidden" th:field="*{status}" th:value="*{status}"/>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input id="todoName2" th:field="*{todoName}"
+                                       type="text" class="form-control"
+                                       required="required"
+                                       placeholder="Task Name"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input th:field="*{description}" type="text" class="form-control"
+                                       required="required"
+                                       placeholder="Description"/>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div>
+                                    <span th:text="*{taskDate}"></span>
+
+                                </div>
+                                <div class="col-md-4  input-group date" id='startDatePicker'>
+
+                                    <input th:field="*{taskDate}" type='datetime' class="form-control" name="startdate"
+                                           required="required"
+                                           placeholder="Task Date" id="startdate"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar">
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" th:field="*{content}" placeholder="Details"
+                                          required="required"></textarea>
+                            </div>
+
+                        </div>
+                        <br/>
+
+
+                        <div class="modal-footer">
+
+                            <div>
+                                <button class="btn btn-success btn-md"><span class="glyphicon glyphicon-send"></span>
+                                    Update
+                                </button>
+                            </div>
+
+                            <br/>
+                            <div>
+                                <a th:href="@{/home}" class="fa fa-arrow-left pull-right"> Back</a>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+                <span class="help-block"></span>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#startDatePicker').datetimepicker({
+            viewMode: 'days',
+            format: 'DD/MM/YYYY hh:mm'
+        });
+    });
+</script>
+</body>
+</html>

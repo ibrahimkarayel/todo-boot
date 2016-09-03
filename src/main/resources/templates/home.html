@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+    <link href="../static/css/todo.css" th:href="@{/css/todo.css}" rel="stylesheet" media="screen"/>
+    <script src="../static/js/todo.js" th:src="@{/static/js/todo.js}"></script>
+
+    <!--datetime picker-->
+    <link href="../static/css/bootstrap-datetimepicker.css" th:href="@{/css/bootstrap-datetimepicker.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="../static/js/moment-with-locales.js" th:src="@{/static/js/moment-with-locales.js}"></script>
+    <script src="../static/js/bootstrap-datetimepicker.js" th:src="@{/static/js/bootstrap-datetimepicker.js}"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="btn-compose pull-left">
+                <a type="button" class="btn btn-success navbar-btn" href="#compose" role="tab" data-toggle="tab"> <span
+                        class="glyphicon glyphicon-pencil"></span>New Task</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#trash" role="tab" data-toggle="tab">Trash</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">
+                    <h6 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h6>
+                </a>
+                </li>
+                <li>
+                    <a>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn" type="submit" value="Sign Out"/>
+                        </form>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="compose">
+
+        <div class="container">
+            <div class="content-container clearfix">
+
+                <div class="row">
+                    <h1 class="content-title">New Task</h1>
+
+                    <!--/*@thymesVar id="todoForm" type="java"*/-->
+                    <form th:object="${reqTodo}" th:action="@{/user/saveTodo}" method="post">
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input id="todoName" th:field="*{todoName}" type="text" class="form-control"
+                                       required="required"
+                                       placeholder="Task Name"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input th:field="*{description}" type="text" class="form-control" required="required"
+                                       placeholder="Description"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4  input-group date" id='startDatePicker'>
+                                    <input th:field="*{taskDate}" type='datetime' class="form-control" name="startdate"
+                                           required="required"
+                                           placeholder="Task Date" id="startdate"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar">
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        <textarea class="form-control" th:field="*{content}" placeholder="Details"
+                                  required="required"></textarea>
+                            <div class="btn-send">
+                                <button class="btn btn-success btn-md"><span class="glyphicon glyphicon-send"></span>
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                        <br/>
+                    </form>
+                </div>
+
+                <span class="help-block"></span>
+
+                <!--start table row insert-->
+                <div class="row">
+
+                    <div class="panel panel-info">
+
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="btn-info">
+                                    <th>Task Name</th>
+                                    <th>Description</th>
+                                    <th>Task Date</th>
+                                    <th>Details</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${#lists.isEmpty(allTodo)}" class="btn-default">
+                                    <td colspan="5" align="center">No Task Entered Yet!!!</td>
+                                </tr>
+                                <tr th:each="todo : ${allTodo}">
+                                    <td th:text="${todo.todoName}"></td>
+                                    <td th:text="${todo.description}"></td>
+                                    <td th:text="${todo.taskDate}"></td>
+                                    <td th:text="${todo.content}"></td>
+                                    <td align="center">
+                                        <a th:href="@{/todo/edit/{id}(id=${todo.id})}"><span
+                                                class="glyphicon glyphicon-edit"></span></a>
+                                        &nbsp; &nbsp;
+
+                                        <a href="#" data-href="{id}" data-toggle="modal"
+                                           data-target="#trashModal"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+
+                                        <div class="modal" id="trashModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h3 id="myTrashModalLabel">Delete Confirmation</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="error-text"><strong>Are you sure you want to
+                                                            delete?</strong></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn" data-dismiss="modal" aria-hidden="true">
+                                                            Cancel
+                                                        </button>
+                                                        <a th:href="@{/todo/trash/{id}(id=${todo.id})}"> <span
+                                                                class="btn btn-danger" value="delete">Delete</span></a>
+
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--table row-->
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-pane" id="trash">
+
+        <div class="container">
+            <div class="content-container clearfix">
+                <div class="col-md-12">
+                    <h1 class="content-title">Trash</h1>
+
+                    <input type="search" placeholder="Search Mail" class="form-control mail-search"/>
+
+                    <div class="panel panel-info">
+
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="btn-info">
+                                    <th>Task Name</th>
+                                    <th>Description</th>
+                                    <th>Task Date</th>
+                                    <th>Details</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${#lists.isEmpty(allPassiveTodo)}" class="btn-default">
+                                    <td colspan="5" align="center">No Task Entered Yet!!!</td>
+                                </tr>
+                                <tr th:each="todo : ${allPassiveTodo}">
+                                    <td th:text="${todo.todoName}"></td>
+                                    <td th:text="${todo.description}"></td>
+                                    <td th:text="${todo.taskDate}"></td>
+                                    <td th:text="${todo.content}"></td>
+                                    <td align="center">
+                                        <a th:href="@{/todo/restore/{id}(id=${todo.id})}"><span
+                                                class="fa fa-refresh"></span></a>
+                                        &nbsp; &nbsp;
+
+                                        <a href="#" data-href="{id}" data-toggle="modal"
+                                           data-target="#deleteModal"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+
+                                        <div class="modal" id="deleteModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h3 id="myModalLabel">Delete Confirmation</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="error-text"><strong>Are you sure you want to
+                                                            delete?</strong></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn " data-dismiss="modal" aria-hidden="true">
+                                                            Cancel
+                                                        </button>
+                                                        <a th:href="@{/todo/delete/{id}(id=${todo.id})}"> <span
+                                                                class="btn btn-danger" value="delete">Delete</span></a>
+
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#startDatePicker').datetimepicker({
+            viewMode: 'days',
+            format: 'DD/MM/YYYY hh:mm'
+        });
+    });
+</script>
+<script>
+    $('#deleteModal').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $('#deleteModalHiddenId').val($(this).find('.btn-ok').attr('href'));
+    });
+
+    $('#trashModal').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $('#trashModalHiddenId').val($(this).find('.btn-ok').attr('href'));
+    });
+
+</script>
+</body>
+</html>
