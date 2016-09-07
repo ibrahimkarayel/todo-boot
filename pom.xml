@@ -10,6 +10,20 @@
     <name>Todo Boot</name>
     <description>Todo Spring Boot Project</description>
 
+    <developers>
+        <developer>
+            <name>ibrahim</name>
+            <email>ibrahm.karayel@gmail.com</email>
+            <url>https://github.com/ibrahimkarayel</url>
+            <id>pironix</id>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/ibrahimkarayel/todo-boot</url>
+        <connection>scm:git:git:https://github.com/ibrahimkarayel/todo-boot.git</connection>
+        <developerConnection>scm:git:git@github.com/ibrahimkarayel/todo-boot.git</developerConnection>
+    </scm>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
