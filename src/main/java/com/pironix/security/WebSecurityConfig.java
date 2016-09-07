@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
+ * * The WebSecurityConfig  Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL

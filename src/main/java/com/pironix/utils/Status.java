@@ -1,6 +1,8 @@
 package com.pironix.utils;
 
 /**
+ * The  Todo Status Enum class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL

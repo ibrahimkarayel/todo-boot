@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * The ModelController  Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -29,6 +31,9 @@ import java.util.List;
 @ComponentScan
 public class ModelController {
 
+    /**
+     * @return all user_todo categories
+     */
     @ModelAttribute("categories")
     public List<TodoCategories> populateCategories() {
         List<TodoCategories> categories = new ArrayList<>();

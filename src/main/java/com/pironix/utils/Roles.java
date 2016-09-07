@@ -1,6 +1,8 @@
 package com.pironix.utils;
 
 /**
+ * The User Roles Enum class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL

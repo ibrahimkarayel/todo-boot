@@ -3,6 +3,8 @@ package com.pironix.model;
 import javax.persistence.*;
 
 /**
+ * The User Entity Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -93,4 +95,43 @@ public class Users {
         this.role = role;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Users)) return false;
+
+        Users users = (Users) o;
+
+        if (id != users.id) return false;
+        if (role != users.role) return false;
+        if (username != null ? !username.equals(users.username) : users.username != null) return false;
+        if (password != null ? !password.equals(users.password) : users.password != null) return false;
+        if (password_2 != null ? !password_2.equals(users.password_2) : users.password_2 != null) return false;
+        return email != null ? email.equals(users.email) : users.email == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (password_2 != null ? password_2.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + role;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", password_2='" + password_2 + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

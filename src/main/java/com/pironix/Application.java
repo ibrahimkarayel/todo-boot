@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 /**
+ * The TodoBoot Project Main Application class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -25,6 +27,11 @@ public class Application extends WebMvcConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
+    /**
+     * Main method
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("Application Started");

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * * The AuthUserDetailsService Repository Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -33,6 +35,12 @@ public class AuthUserDetailsService implements UserDetailsService {
 
     private User springUser;
 
+    /**
+     * @param username The user name
+     * @return UserDetails
+     * @throws UsernameNotFoundException
+     * @see org.springframework.security.core.userdetails
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -65,6 +73,10 @@ public class AuthUserDetailsService implements UserDetailsService {
         }
     }
 
+    /**
+     * @param role The user role
+     * @return user by Authorities
+     */
     public List<GrantedAuthority> getAuthorities(Integer role) {
 
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
@@ -77,6 +89,10 @@ public class AuthUserDetailsService implements UserDetailsService {
         return authList;
     }
 
+    /**
+     * @param username the user name
+     * @return logger in user
+     */
     private Users getUserDetail(String username) {
 
         Users user = userService.findByUsername(username);

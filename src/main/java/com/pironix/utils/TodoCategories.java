@@ -1,6 +1,8 @@
 package com.pironix.utils;
 
 /**
+ * The Todo Categories Enum class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -10,7 +12,7 @@ package com.pironix.utils;
 public enum TodoCategories {
     MEETING("MEETING"),
     PROJECT("PROJECT"),
-    SHOPPING("PROJECT"),
+    SHOPPING("SHOPPING"),
     LESSON("LESSON"),
     OUTDOOR("OUTDOOR");
     private String value;

@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * The MyController Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -49,7 +51,7 @@ public class MyController {
     @Autowired
     TodoService todoService;
 
-    private static Users loginUser = null;
+    private Users loginUser = null;
 
     @RequestMapping("/")
     public String root(Model model) {
@@ -69,10 +71,9 @@ public class MyController {
     @RequestMapping("/home")
     public String home(Model model) {
 
-        if (loginUser == null) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            loginUser = userService.findByUsername(auth.getName());
-        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        loginUser = userService.findByUsername(auth.getName());
+
         model.addAttribute("reqTodo", new Todo());
         model.addAttribute("allTodo", todoService.findByUserIdStatus(loginUser.getId(), Status.ACTIVE.getValue()));
         model.addAttribute("allPassiveTodo", todoService.findByUserIdStatus(loginUser.getId(), Status.PASSIVE.getValue()));

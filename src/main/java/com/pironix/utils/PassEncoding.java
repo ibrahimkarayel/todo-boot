@@ -8,6 +8,8 @@ package com.pironix.utils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
+ * The Singleton PassEncoding class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL

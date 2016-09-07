@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 /**
+ * * The MyAuthenticationSuccessHandler  Class
+ * <p>
  * Created by ibrahim
  *
  * @author ibrahim KARAYEL
@@ -30,6 +32,7 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
     private static final Logger logger = LoggerFactory.getLogger(MyAuthenticationSuccessHandler.class);
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
 
     @Override
     protected void handle(HttpServletRequest request,
@@ -45,6 +48,10 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
+    /**
+     * @param authentication
+     * @return determine Target Url
+     */
     protected String determineTargetUrl(Authentication authentication) {
         logger.info("determineTargetUrl: " + authentication.getName());
 
